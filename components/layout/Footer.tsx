@@ -8,13 +8,13 @@ const Footer = () => {
         <p>&copy; 2025 Portfolio. All rights reserved.</p>
       </div>
       <div className="flex items-center justify-center gap-4">
-        <Link href="https://www.instagram.com/marco_antonio_cortes_garcia/" target="_blank">
+        <Link href="https://www.instagram.com/mxrcor" target="_blank">
           <Instagram className="h-7 w-7 text-foreground dark:text-foreground/80" />
         </Link>
-        <Link href="https://github.com/marco-antonio-cortes-garcia" target="_blank">
+        <Link href="https://github.com/marcorv6" target="_blank">
           <Github className="h-7 w-7 text-foreground dark:text-foreground/80" />
         </Link>
-        <Link href="https://www.linkedin.com/in/marco-antonio-cortes-garcia-b0b555200/" target="_blank">
+        <Link href="https://www.linkedin.com/in/marco-antonio-romero-804627224/" target="_blank">
           <Linkedin className="h-7 w-7 text-foreground dark:text-foreground/80" />
         </Link>
       </div>
