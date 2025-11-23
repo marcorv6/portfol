@@ -1,5 +1,40 @@
-import { FeaturedProject } from "@/components/projects/featured-project"
-import { ProjectCard } from "@/components/projects/project-card"
+import dynamic from "next/dynamic"
+import type { Metadata } from "next"
+
+// Lazy load project components
+const FeaturedProject = dynamic(
+  () => import("@/components/projects/featured-project").then(mod => ({ default: mod.FeaturedProject })),
+  { 
+    loading: () => <div className="min-h-[400px] animate-pulse bg-muted/20 rounded-3xl mb-12" aria-label="Loading featured project..." />
+  }
+)
+
+const ProjectCard = dynamic(
+  () => import("@/components/projects/project-card").then(mod => ({ default: mod.ProjectCard })),
+  { 
+    loading: () => <div className="h-[400px] animate-pulse bg-muted/20 rounded-2xl" aria-label="Loading project..." />
+  }
+)
+
+const EmptyProjectsState = dynamic(
+  () => import("@/components/projects/empty-projects-state").then(mod => ({ default: mod.EmptyProjectsState })),
+  { 
+    loading: () => <div className="min-h-[70vh] flex items-center justify-center" aria-label="Loading..." />,
+    ssr: true
+  }
+)
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Explore Marco Romero's portfolio of web development projects, featuring modern applications built with React, Next.js, and TypeScript.",
+  openGraph: {
+    title: "Projects | Marco Romero",
+    description: "A collection of web development projects showcasing frontend architecture and modern web technologies.",
+  },
+}
+
+// Set to true when you have projects to display
+const SHOW_PROJECTS = false
 
 const projects = [
   {
@@ -35,32 +70,45 @@ export default function ProjectsPage() {
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-6xl md:text-7xl font-bold mb-4">Projects</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl">
-            A collection of my recent work and side projects. Each one tells a unique story of problem-solving and creativity.
-          </p>
+          {SHOW_PROJECTS ? (
+            <p className="text-xl text-muted-foreground max-w-2xl">
+              A collection of my recent work and side projects. Each one tells a unique story of problem-solving and creativity.
+            </p>
+          ) : (
+            <p className="text-xl text-muted-foreground max-w-2xl">
+              No projects to display.
+            </p>
+          )}
         </div>
 
-        {/* Featured Project */}
-        <FeaturedProject
-          title="Social Media Dashboard"
-          subtitle="Analytics & Insights Platform"
-          description="Comprehensive social media analytics platform that helps businesses track engagement, analyze trends, and optimize their content strategy across multiple platforms."
-          link="#"
-        />
+        {SHOW_PROJECTS ? (
+          <>
+            {/* Featured Project */}
+            <FeaturedProject
+              title="Social Media Dashboard"
+              subtitle="Analytics & Insights Platform"
+              description="Comprehensive social media analytics platform that helps businesses track engagement, analyze trends, and optimize their content strategy across multiple platforms."
+              link="#"
+            />
 
-        {/* Project Grid */}
-        <div>
-          <h2 className="text-3xl font-bold mb-6">More Projects</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project.title}
-                {...project}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
+            {/* Project Grid */}
+            <div>
+              <h2 className="text-3xl font-bold mb-6">More Projects</h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                {projects.map((project, index) => (
+                  <ProjectCard
+                    key={project.title}
+                    {...project}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          /* Empty State */
+          <EmptyProjectsState />
+        )}
       </div>
     </div>
   )
