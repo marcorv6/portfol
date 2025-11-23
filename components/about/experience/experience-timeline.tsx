@@ -119,7 +119,7 @@ export function ExperienceTimeline() {
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-2xl font-semibold tracking-tight">Experience</h2>
-        <p className="text-sm text-muted-foreground max-w-2xl">
+        <p className="text-sm text-muted-foreground">
           A timeline of roles where I've focused on frontend architecture, performance,
           security, and delivering reliable web applications.
         </p>
