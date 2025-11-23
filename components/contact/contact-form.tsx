@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils"
 import contactForm from "@/services/contact-form"
 import { Spinner } from "../ui/spinner"
 import { ContactFormResponse } from "@/types/contact-form"
-import ThankYouCard from "./thank-you-card"
 
 interface ContactFormData {
   name: string
@@ -21,7 +20,7 @@ interface ContactFormData {
 }
 const ContactForm = ({ setSuccessfullySubmitted }: { setSuccessfullySubmitted: (value: boolean) => void }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, handleSubmit: handleSubmitForm, formState: { errors }, reset } = useForm<ContactFormData>({
+  const { register, handleSubmit: handleSubmitForm, formState: { errors, isValid }, reset } = useForm<ContactFormData>({
     defaultValues: {
       name: "",
       email: "",
@@ -52,20 +51,20 @@ const ContactForm = ({ setSuccessfullySubmitted }: { setSuccessfullySubmitted: (
       <form className="flex flex-col gap-4" onSubmit={handleSubmitForm(onSubmit)}>
         <Field>
           <FieldLabel>Name</FieldLabel>
-          <Input className={cn("border-input dark:border-input/30", errors.name && "border-destructive")} type="text" placeholder="Name" {...register("name", { required: { value: true, message: "Name is required" }, minLength: { value: 3, message: "Name must be at least 3 characters long" }, maxLength: { value: 50, message: "Name must be less than 50 characters long" } })} />
+          <Input className={cn("border-input dark:border-input/30", errors.name && "border-destructive")} disabled={isSubmitting} type="text" placeholder="Name" {...register("name", { required: { value: true, message: "Name is required" }, minLength: { value: 3, message: "Name must be at least 3 characters long" }, maxLength: { value: 50, message: "Name must be less than 50 characters long" } })} />
           <ErrorMessage message={errors.name?.message} show={!!errors.name} />
         </Field>
         <Field>
           <FieldLabel>Email</FieldLabel>
-          <Input className={cn("border-input dark:border-input/30", errors.email && "border-destructive")} type="email" placeholder="Email" {...register("email", { required: { value: true, message: "Email is required" }, pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } })} />
+          <Input className={cn("border-input dark:border-input/30", errors.email && "border-destructive")} disabled={isSubmitting} type="email" placeholder="Email" {...register("email", { required: { value: true, message: "Email is required" }, pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" } })} />
           <ErrorMessage message={errors.email?.message} show={!!errors.email} />
         </Field>
         <Field>
           <FieldLabel>Message</FieldLabel>
-          <Textarea className={cn("border-input dark:border-input/30", errors.message && "border-destructive")} placeholder="Message" {...register("message", { required: { value: true, message: "Message is required" }, minLength: { value: 10, message: "Message must be at least 10 characters long" }, maxLength: { value: 500, message: "Message must be less than 500 characters" } })} />
+          <Textarea className={cn("border-input dark:border-input/30", errors.message && "border-destructive")} disabled={isSubmitting} placeholder="Message" {...register("message", { required: { value: true, message: "Message is required" }, minLength: { value: 10, message: "Message must be at least 10 characters long" }, maxLength: { value: 500, message: "Message must be less than 500 characters" } })} />
           <ErrorMessage message={errors.message?.message} show={!!errors.message} />
         </Field>
-        <Button disabled={isSubmitting || !!errors?.root?.message} type="submit">
+        <Button disabled={isSubmitting || !isValid} type="submit">
           {isSubmitting ? <Spinner className="size-4 animate-spin" /> : "Submit"}
         </Button>
       </form>
