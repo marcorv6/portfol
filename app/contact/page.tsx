@@ -1,15 +1,17 @@
 "use client"
 
-import ContactForm from "@/components/contact/contact-form"
-import ThankYouCard from "@/components/contact/thank-you-card"
 import { Card, CardContent } from "@/components/ui/card"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, lazy, Suspense } from "react"
+
+// Lazy load form components
+const ContactForm = lazy(() => import("@/components/contact/contact-form"))
+const ThankYouCard = lazy(() => import("@/components/contact/thank-you-card"))
 
 const ContactPage = () => {
   const [successfullySubmitted, setSuccessfullySubmitted] = useState(false);
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen py-8 overflow-hidden">
+    <div className="relative flex flex-col items-center min-h-screen py-12 px-4 md:px-8 lg:px-12 overflow-hidden">
       {/* Animated Gradient Blob 1 */}
       <div 
         className="gradient-blob -z-0"
@@ -33,15 +35,15 @@ const ContactPage = () => {
       />
       
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-4 w-full">
+      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-7xl mx-auto">
         <motion.div 
           className="flex flex-col items-center justify-center mb-8 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-6xl font-bold mb-4">Contact</h1>
-          <p className="text-lg max-w-xl">
+          <h1 className="text-6xl md:text-7xl font-bold mb-4">Contact</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl">
             Get in touch with me to discuss your project or any other questions you may have.
           </p>
         </motion.div>
@@ -54,7 +56,14 @@ const ContactPage = () => {
         >
           <Card className="backdrop-blur-sm bg-card/80 border-2">
             <CardContent>
-              {successfullySubmitted ? <ThankYouCard /> : <ContactForm setSuccessfullySubmitted={setSuccessfullySubmitted} />}
+              <Suspense fallback={
+                <div className="py-8 flex items-center justify-center" role="status" aria-live="polite">
+                  <span className="sr-only">Loading form...</span>
+                  <div className="animate-pulse text-muted-foreground">Loading...</div>
+                </div>
+              }>
+                {successfullySubmitted ? <ThankYouCard /> : <ContactForm setSuccessfullySubmitted={setSuccessfullySubmitted} />}
+              </Suspense>
             </CardContent>
           </Card>
         </motion.div>
