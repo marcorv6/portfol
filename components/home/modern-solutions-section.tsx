@@ -1,45 +1,48 @@
 "use client"
 
-import Image from "next/image"
+import dynamic from "next/dynamic"
 import { ScrollReveal } from "./scroll-reveal"
+import { TiltCard } from "@/components/ui/tilt-card"
+
+const ArchitectureCanvas = dynamic(
+  () => import("./architecture-canvas").then((mod) => mod.ArchitectureCanvas),
+  { ssr: false }
+)
 
 export function ModernSolutionsSection() {
   return (
-    <section className="min-h-screen bg-muted/30 py-20 px-4 md:px-8">
+    <section className="min-h-screen bg-muted/20 py-24 px-4 md:px-8 relative overflow-hidden transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal direction="left">
-          <h2 className="text-6xl md:text-8xl font-bold mb-12 text-primary">Modern Solutions</h2>
+          <div className="mb-12">
+            <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block mb-2 font-semibold">
+              02 // System Architecture & Engineering
+            </span>
+            <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">
+              Modern Solutions
+            </h2>
+          </div>
         </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <ScrollReveal direction="left" delay={0.2}>
-            <div>
-              <p className="text-lg leading-relaxed mb-4">
-                I build modern, performance-driven web solutions designed for scale, reliability, and long-term maintainability. My work blends strong architectural foundations with hands-on engineering, resulting in applications that are fast, modular, and highly resilient.
+            <div className="space-y-6">
+              <p className="text-lg leading-relaxed text-foreground font-light">
+                I build performance-driven web architectures designed for scale, high-throughput reliability, and developer efficiency. My work blends solid architectural patterns with hands-on frontend engineering, resulting in systems that are modular, fast, and secure.
               </p>
-              <p className="text-lg leading-relaxed text-muted-foreground">
-                From micro-frontend ecosystems powered by React, Vite, and Module Federation, to secure and automated pipelines with Lighthouse CI, Semgrep, and AWS CloudFront, I focus on delivering systems that not only work—but evolve.
+              <p className="text-lg leading-relaxed text-muted-foreground font-light">
+                From enterprise micro-frontend ecosystems using React, Vite, and Module Federation, to automated security audit pipelines (Semgrep, Lighthouse CI, AWS CloudFront), I focus on engineering resilient platforms built to last.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="right" delay={0.3}>
-            <div className="relative h-[400px] bg-muted rounded-lg overflow-hidden">
-              <Image 
-                className="object-cover w-full h-full" 
-                src="/modern-solutions.jpg" 
-                alt="Modern web development solutions and architecture" 
-                width={400} 
-                height={400}
-                loading="lazy"
-                placeholder="blur"
-                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNlMGUwZTAiLz48L3N2Zz4="
-              />
-            </div>
+            <TiltCard className="w-full">
+              <ArchitectureCanvas />
+            </TiltCard>
           </ScrollReveal>
         </div>
       </div>
     </section>
   )
 }
-

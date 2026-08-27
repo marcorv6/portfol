@@ -11,11 +11,11 @@ export function CTASection() {
       <LogoPattern />
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <ScrollReveal direction="up">
-          <h2 className="text-6xl md:text-8xl font-bold mb-8 text-primary">Let's Work Together</h2>
+          <h2 className="text-6xl md:text-8xl font-bold mb-8 text-primary">Let&apos;s Work Together</h2>
         </ScrollReveal>
         <ScrollReveal direction="up" delay={0.2}>
           <p className="text-xl mb-8 text-muted-foreground">
-            Ready to bring your ideas to life? Get in touch and let's create something amazing.
+            Ready to bring your ideas to life? Get in touch and let&apos;s create something amazing.
           </p>
         </ScrollReveal>
         <ScrollReveal direction="up" delay={0.3}>

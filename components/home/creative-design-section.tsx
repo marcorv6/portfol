@@ -1,39 +1,43 @@
 "use client"
 
-import Image from "next/image"
+import dynamic from "next/dynamic"
 import { ScrollReveal } from "./scroll-reveal"
+import { TiltCard } from "@/components/ui/tilt-card"
+
+const CreativeCanvas = dynamic(
+  () => import("./creative-canvas").then((mod) => mod.CreativeCanvas),
+  { ssr: false }
+)
 
 export function CreativeDesignSection() {
   return (
-    <section className="min-h-screen bg-background py-20 px-4 md:px-8">
+    <section className="min-h-screen bg-background py-24 px-4 md:px-8 relative overflow-hidden transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal direction="right">
-          <h2 className="text-6xl md:text-8xl font-bold mb-12 text-primary">Creative Design</h2>
+          <div className="mb-12">
+            <span className="text-xs font-mono text-purple-600 dark:text-purple-400 uppercase tracking-widest block mb-2 font-semibold">
+              01 // Visual Philosophy & UI Engineering
+            </span>
+            <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground">
+              Creative Design
+            </h2>
+          </div>
         </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <ScrollReveal direction="left" delay={0.2}>
-            <div className="relative h-[400px] bg-muted rounded-lg overflow-hidden w-full">
-              <Image 
-                className="object-cover w-full h-full" 
-                src="/creative-design-1.jpg" 
-                alt="Creative design project showcase" 
-                width={400} 
-                height={400}
-                loading="lazy"
-                placeholder="blur"
-                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNlMGUwZTAiLz48L3N2Zz4="
-              />
-            </div>
+            <TiltCard className="w-full">
+              <CreativeCanvas />
+            </TiltCard>
           </ScrollReveal>
 
           <ScrollReveal direction="right" delay={0.3}>
-            <div>
-              <p className="text-lg leading-relaxed mb-4">
-                My design philosophy blends minimalism, clarity, and functional beauty. I create interfaces that feel intuitive and light, while maintaining a modern, strong visual identity driven by well-crafted components and purposeful interactions.
+            <div className="space-y-6">
+              <p className="text-lg leading-relaxed text-foreground font-light">
+                My design philosophy blends minimalism, structural clarity, and functional beauty. I engineer interfaces that feel light, intuitive, and performant, while maintaining a strong visual identity powered by modern WebGL, CSS 3D transforms, and custom components.
               </p>
-              <p className="text-lg leading-relaxed text-muted-foreground">
-                  I work closely with design systems—whether building them from scratch or extending existing style guides—to ensure consistency across large applications.
+              <p className="text-lg leading-relaxed text-muted-foreground font-light">
+                I work extensively with scalable design systems—building them from scratch or extending existing frameworks—to ensure visual integrity and developer ergonomics across large enterprise applications.
               </p>
             </div>
           </ScrollReveal>
@@ -42,4 +46,3 @@ export function CreativeDesignSection() {
     </section>
   )
 }
-
