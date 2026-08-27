@@ -1,7 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { TiltCard } from "@/components/ui/tilt-card"
+import { ExternalLink, Layers, Sparkles } from "lucide-react"
 import Link from "next/link"
 
 interface ProjectCardProps {
@@ -13,47 +13,37 @@ interface ProjectCardProps {
   index: number
 }
 
-export function ProjectCard({ title, category, description, image, link, index }: ProjectCardProps) {
+export function ProjectCard({ title, category, description, link }: ProjectCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      whileHover={{ scale: 1.02 }}
-      className="group relative overflow-hidden rounded-2xl bg-card border border-border shadow-lg"
-    >
-      <Link href={link || "#"} className="block">
-        <div className="aspect-video relative overflow-hidden bg-muted">
-          {image ? (
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
-              <span className="text-6xl font-bold text-muted-foreground/30">{title[0]}</span>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </div>
-        
-        <div className="p-6">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs font-semibold text-primary uppercase tracking-wide">
+    <TiltCard className="w-full h-full">
+      <Link href={link || "#"} className="block p-6 h-full flex flex-col justify-between group space-y-4">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[11px] font-mono text-blue-400">
+              <Layers className="w-3 h-3" />
               {category}
             </span>
+            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-blue-400 transition-colors" />
           </div>
-          <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+
+          <h3 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors">
             {title}
           </h3>
-          <p className="text-muted-foreground line-clamp-2">
+
+          <p className="text-sm text-slate-300 leading-relaxed font-light">
             {description}
           </p>
         </div>
+
+        <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
+          <span className="flex items-center gap-1 text-blue-400">
+            <Sparkles className="w-3 h-3" /> Architecture Case Study
+          </span>
+          <span className="group-hover:translate-x-1 transition-transform text-white">
+            View Details &rarr;
+          </span>
+        </div>
       </Link>
-    </motion.div>
+    </TiltCard>
   )
 }
-

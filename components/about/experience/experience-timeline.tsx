@@ -1,18 +1,18 @@
-// app/(sections)/experience/experience-timeline.tsx
 "use client"
 
-import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge"
+import { motion } from "framer-motion"
+import { Briefcase, Calendar, MapPin } from "lucide-react"
 
 type ExperienceItem = {
-  role: string;
-  company: string;
-  period: string;
-  location?: string;
-  description: string;
-  highlights: string[];
-  technologies: string[];
-};
+  role: string
+  company: string
+  period: string
+  location?: string
+  description: string
+  highlights: string[]
+  technologies: string[]
+}
 
 const EXPERIENCES: ExperienceItem[] = [
   {
@@ -107,85 +107,91 @@ const EXPERIENCES: ExperienceItem[] = [
     ],
     technologies: ["JavaScript", "React", "Node.js", "REST APIs"],
   },
-];
+]
 
 export function ExperienceTimeline() {
   return (
-    <section className="space-y-8">
+    <section className="space-y-8 w-full">
       <motion.header 
         className="space-y-2"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-2xl font-semibold tracking-tight">Experience</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-2">
+          <Briefcase className="w-6 h-6 text-blue-600 dark:text-blue-400" /> Professional Experience
+        </h2>
         <p className="text-sm text-muted-foreground">
-          A timeline of roles where I've focused on frontend architecture, performance,
+          A timeline of roles where I&apos;ve focused on frontend architecture, performance,
           security, and delivering reliable web applications.
         </p>
       </motion.header>
 
-      <div className="relative">
-        {/* Vertical line */}
-        <div className="absolute left-4 top-0 bottom-0 w-px bg-border" aria-hidden="true" />
+      <div className="relative border-l border-border pl-6 sm:pl-8 space-y-8 ml-3">
+        {EXPERIENCES.map((job, index) => (
+          <motion.article
+            key={`${job.company}-${job.period}`}
+            className="relative group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 * index }}
+          >
+            {/* Step indicator */}
+            <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-background border border-blue-500/50 group-hover:border-blue-400 group-hover:ring-4 ring-blue-500/20 transition-all">
+              <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+            </div>
 
-        <div className="space-y-10">
-          {EXPERIENCES.map((job, index) => (
-            <motion.article
-              key={`${job.company}-${job.period}`}
-              className="relative flex gap-6 pl-10"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-            >
-              {/* Step indicator */}
-              <div className="absolute left-0 top-1 flex h-8 w-8 items-center justify-center">
-                <div className="relative flex h-3 w-3 items-center justify-center">
-                  <span className="absolute inline-flex h-3 w-3 rounded-full bg-background border-2 border-primary" />
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 space-y-3">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <div className="space-y-1">
-                    <h3 className="text-base font-semibold leading-none">
-                      {job.role}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {job.company}
-                      {job.location ? ` · ${job.location}` : null}
-                    </p>
-                  </div>
-                  <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                    {job.period}
+            {/* Glassmorphic Card */}
+            <div className="rounded-2xl bg-card border border-border p-5 sm:p-6 backdrop-blur-md hover:border-primary/40 transition-all duration-300 shadow-sm space-y-4">
+              <div className="flex flex-wrap items-start justify-between gap-2 border-b border-border pb-3">
+                <div>
+                  <h3 className="text-lg font-bold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors">
+                    {job.role}
+                  </h3>
+                  <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                    {job.company}
                   </p>
                 </div>
-
-                <p className="text-sm text-muted-foreground">{job.description}</p>
-
-                {job.highlights.length > 0 && (
-                  <ul className="list-disc space-y-1 pl-4 text-sm text-muted-foreground">
-                    {job.highlights.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                )}
-
-                {job.technologies.length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {job.technologies.map((tech) => (
-                      <Badge key={tech} variant="outline">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
+                
+                <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
+                  {job.location && (
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5" /> {job.location}
+                    </span>
+                  )}
+                  <span className="px-2.5 py-1 rounded-full bg-muted border border-border text-foreground flex items-center gap-1">
+                    <Calendar className="w-3 h-3 text-blue-600 dark:text-blue-400" /> {job.period}
+                  </span>
+                </div>
               </div>
-            </motion.article>
-          ))}
-        </div>
+
+              <p className="text-sm text-foreground leading-relaxed font-light">{job.description}</p>
+
+              {job.highlights.length > 0 && (
+                <ul className="space-y-1.5 text-xs text-muted-foreground list-disc pl-4 font-light">
+                  {job.highlights.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              )}
+
+              {job.technologies.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {job.technologies.map((tech) => (
+                    <Badge 
+                      key={tech} 
+                      variant="outline" 
+                      className="bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-300 text-[11px] px-2 py-0.5 font-medium"
+                    >
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.article>
+        ))}
       </div>
     </section>
-  );
+  )
 }

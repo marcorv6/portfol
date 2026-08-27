@@ -46,7 +46,7 @@ export function EmptyProjectsState() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          I'm currently working on some exciting projects to showcase here.
+          I&apos;m currently working on some exciting projects to showcase here.
         </motion.p>
         
         <motion.p 
@@ -55,7 +55,7 @@ export function EmptyProjectsState() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          Check back soon to see what I've been building! 🚀
+          Check back soon to see what I&apos;ve been building! 🚀
         </motion.p>
       </motion.div>
     </div>

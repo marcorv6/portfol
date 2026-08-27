@@ -38,7 +38,7 @@ export function LogoAnimated({
           strokeWidth="9"
           strokeLinecap="square"
           className="logo-line logo-line-1"
-          style={{ transition: "stroke 0.3s ease" }}
+          style={{ transition: "stroke 0.3s ease", willChange: "stroke-dashoffset" }}
         />
         {/* diagonal secundaria (paralela) */}
         <line
@@ -50,7 +50,7 @@ export function LogoAnimated({
           strokeWidth="9"
           strokeLinecap="square"
           className="logo-line logo-line-2"
-          style={{ transition: "stroke 0.3s ease" }}
+          style={{ transition: "stroke 0.3s ease", willChange: "stroke-dashoffset" }}
         />
         {/* diagonal cruzada */}
         <line
@@ -62,7 +62,7 @@ export function LogoAnimated({
           strokeWidth="9"
           strokeLinecap="square"
           className="logo-line logo-line-3"
-          style={{ transition: "stroke 0.3s ease" }}
+          style={{ transition: "stroke 0.3s ease", willChange: "stroke-dashoffset" }}
         />
       </svg>
 

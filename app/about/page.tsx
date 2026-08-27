@@ -1,6 +1,5 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { useState, Suspense, lazy } from "react"
+import { Suspense, lazy } from "react"
 import { motion } from "framer-motion"
 import AboutMe from "@/components/about/about-me"
 
@@ -12,21 +11,6 @@ const ExperienceTimeline = lazy(() =>
 )
 
 const AboutPage = () => {
-  const [isDownloading, setIsDownloading] = useState(false)
-  const handleDownload = () => {
-    setIsDownloading(true)
-    setTimeout(() => {
-      setIsDownloading(false)
-      //file on public folder
-      const file = "public/cv.pdf"
-      const link = document.createElement("a")
-      link.href = file
-      link.download = "cv.pdf"
-      link.click()
-      link.remove()
-      window.URL.revokeObjectURL(file)
-    }, 3000)
-  }
   return (
     <div className="relative min-h-screen py-12 px-4 md:px-8 lg:px-12">
       <div className="max-w-7xl mx-auto">
