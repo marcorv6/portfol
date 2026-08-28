@@ -20,6 +20,7 @@ import {
   PieChart,
   Wallet,
   Target,
+  Palette,
 } from "lucide-react"
 
 export function ExpenseTrackerCaseStudy() {
@@ -41,9 +42,16 @@ export function ExpenseTrackerCaseStudy() {
       {/* 1. HERO SECTION */}
       <section className="space-y-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-300">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-            Full-Stack Financial Architecture Case Study
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-300">
+              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+              Full-Stack Financial Architecture Case Study
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/50 text-xs font-mono text-slate-400">
+              <Palette className="w-3.5 h-3.5 text-purple-400" />
+              UI Design Inspired by Public Dribbble Concepts
+            </div>
           </div>
 
           {/* Action Links */}
