@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { TiltCard } from "@/components/ui/tilt-card"
-import { ExternalLink, Github, Sparkles, Layers, ArrowRight, BookOpen } from "lucide-react"
+import { ExternalLink, Github, Sparkles, Layers, ArrowRight, BookOpen, Wallet } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -32,6 +32,90 @@ export default function ProjectsOverviewPage() {
 
         {/* Project Card Overview List */}
         <div className="space-y-8">
+          {/* SpendFlow Platform */}
+          <TiltCard className="w-full">
+            <div className="p-6 md:p-8 grid md:grid-cols-3 gap-8 items-center">
+              {/* Preview Graphics */}
+              <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-950 border border-white/10 group flex flex-col justify-between p-5 font-mono text-xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-emerald-400 font-bold">
+                    <Wallet className="w-4 h-4" />
+                    <span>SpendFlow</span>
+                  </div>
+                  <span className="text-[10px] text-slate-400">USD $</span>
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-[10px] text-slate-400 uppercase block">Monthly Cashflow</span>
+                  <div className="text-xl font-extrabold text-white">+$4,981.20</div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                    <div className="h-full bg-emerald-500 w-[68%]" />
+                  </div>
+                </div>
+
+                <div className="text-[10px] text-slate-400 flex items-center justify-between">
+                  <span>Categories: 9 Active</span>
+                  <span className="text-emerald-400">Budget Safe</span>
+                </div>
+              </div>
+
+              {/* Content Overview */}
+              <div className="md:col-span-2 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-mono text-indigo-400">
+                    <Layers className="w-3.5 h-3.5" />
+                    Financial & Analytics Platform
+                  </span>
+
+                  <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5" /> Production Active
+                  </span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                  SpendFlow Platform
+                </h2>
+
+                <p className="text-sm text-slate-300 font-light leading-relaxed">
+                  A high-performance full-stack personal finance and expense tracking application built with Next.js 16 App Router, serverless PostgreSQL on Neon, category budget targets, JWT auth, and interactive recruiter demo guest access.
+                </p>
+
+                {/* Actions */}
+                <div className="pt-4 flex flex-wrap items-center gap-3">
+                  <Link
+                    href="/project/expense-tracker"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs font-mono transition-all shadow-md shadow-blue-600/20"
+                  >
+                    <BookOpen className="w-4 h-4" />
+                    <span>View Case Study & Specs</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+
+                  <a
+                    href="https://expense.marco-romero.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/20 text-slate-300 hover:text-white text-xs font-mono transition-all"
+                  >
+                    <span>Launch Live App</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-blue-400" />
+                  </a>
+
+                  <a
+                    href="https://github.com/marcorv6/expense-tracker"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/20 text-slate-400 hover:text-white text-xs font-mono transition-all"
+                  >
+                    <Github className="w-4 h-4" />
+                    Source Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </TiltCard>
+
+          {/* TaskFlow Platform */}
           <TiltCard className="w-full">
             <div className="p-6 md:p-8 grid md:grid-cols-3 gap-8 items-center">
               {/* Thumbnail Image */}
