@@ -1,0 +1,28 @@
+{
+  "project": "Portfolio",
+  "version": "1.0.0",
+  "harness_roles": ["orchestrator", "builder", "tester", "editorial_reviewer", "committer"],
+  "features": [
+    {
+      "id": "FEAT-001",
+      "title": "5-Agent Harness & Editorial Reviewer Integration",
+      "status": "completed",
+      "assigned_role": "orchestrator",
+      "verified": true
+    },
+    {
+      "id": "FEAT-002",
+      "title": "Engineering Blog Section & Post Renderer",
+      "status": "completed",
+      "assigned_role": "builder",
+      "verified": true
+    },
+    {
+      "id": "FEAT-003",
+      "title": "Harness Engineering Deep-Dive Article",
+      "status": "completed",
+      "assigned_role": "editorial_reviewer",
+      "verified": true
+    }
+  ]
+}
