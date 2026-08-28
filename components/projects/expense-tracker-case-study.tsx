@@ -47,11 +47,6 @@ export function ExpenseTrackerCaseStudy() {
               <Sparkles className="w-3.5 h-3.5 text-blue-400" />
               Full-Stack Financial Architecture Case Study
             </div>
-
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/50 text-xs font-mono text-slate-400">
-              <Palette className="w-3.5 h-3.5 text-purple-400" />
-              UI Design Inspired by Public Dribbble Concepts
-            </div>
           </div>
 
           {/* Action Links */}
