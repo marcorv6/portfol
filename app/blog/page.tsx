@@ -1,6 +1,4 @@
 import Link from "next/link";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { BLOG_POSTS } from "@/content/posts";
 import { Calendar, Clock, ArrowRight, Tag, Sparkles } from "lucide-react";
 
@@ -11,10 +9,7 @@ export const metadata = {
 
 export default function BlogIndexPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
-
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         {/* Hero Section */}
         <div className="space-y-4 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-mono font-bold border border-blue-500/20">
@@ -82,9 +77,6 @@ export default function BlogIndexPage() {
             </div>
           </article>
         ))}
-      </main>
-
-      <Footer />
     </div>
   );
 }

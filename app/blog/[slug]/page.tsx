@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { getBlogPostBySlug, BLOG_POSTS } from "@/content/posts";
 import { Calendar, Clock, ArrowLeft, Tag, User, Sparkles, CheckCircle2 } from "lucide-react";
 
@@ -37,10 +35,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
-
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <div className="max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
         {/* Back Link */}
         <Link
           href="/blog"
@@ -161,9 +156,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             );
           })}
         </article>
-      </main>
-
-      <Footer />
     </div>
   );
 }
