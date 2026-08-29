@@ -18,6 +18,9 @@ import {
   Mail,
   Zap,
   ArrowLeft,
+  Search,
+  UserCheck,
+  CheckCircle2,
 } from "lucide-react"
 
 export function TaskFlowCaseStudy() {
@@ -74,7 +77,7 @@ export function TaskFlowCaseStudy() {
             TaskFlow Platform
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl">
-            A high-performance full-stack task management platform built with Next.js 16 App Router, serverless PostgreSQL on Neon, JWT authentication, Resend transactional emails, and formally audited REST API specifications.
+            A high-performance full-stack task management platform built with Next.js 16 App Router, serverless PostgreSQL on Neon (verify-full SSL), persistent user avatar sessions, Vitest component test harness, and ⌘K quick search shortcuts.
           </p>
         </div>
 
@@ -110,21 +113,52 @@ export function TaskFlowCaseStudy() {
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border space-y-1 shadow-sm">
-          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Architecture</span>
-          <p className="text-xl font-extrabold text-foreground font-mono">SSR Handlers</p>
-          <span className="text-[10px] text-muted-foreground block">100% Server Execution</span>
+          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Test Suite</span>
+          <p className="text-xl font-extrabold text-blue-700 dark:text-blue-400 font-mono">Vitest Integration</p>
+          <span className="text-[10px] text-muted-foreground block">Component Assertions</span>
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border space-y-1 shadow-sm">
           <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Security</span>
-          <p className="text-xl font-extrabold text-emerald-700 dark:text-emerald-400 font-mono">IDOR Guarded</p>
-          <span className="text-[10px] text-muted-foreground block">Boundary Protection</span>
+          <p className="text-xl font-extrabold text-emerald-700 dark:text-emerald-400 font-mono">verify-full SSL</p>
+          <span className="text-[10px] text-muted-foreground block">IDOR & Node-PG Guarded</span>
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border space-y-1 shadow-sm">
-          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Database</span>
-          <p className="text-xl font-extrabold text-blue-700 dark:text-blue-400 font-mono">6 Tables</p>
-          <span className="text-[10px] text-muted-foreground block">Foreign Key Cascades</span>
+          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">UI Shortcuts</span>
+          <p className="text-xl font-extrabold text-purple-700 dark:text-purple-400 font-mono">⌘K Search</p>
+          <span className="text-[10px] text-muted-foreground block">Quick Task Navigation</span>
+        </div>
+      </section>
+
+      {/* NEW FEATURE HIGHLIGHTS PANEL */}
+      <section className="p-6 rounded-2xl bg-card border border-border space-y-4 shadow-sm">
+        <h3 className="text-xs font-mono uppercase font-bold text-muted-foreground tracking-wider flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <span>Latest Release Updates (v1.3.0)</span>
+        </h3>
+        <div className="grid md:grid-cols-3 gap-4 font-mono text-xs">
+          <div className="p-3.5 rounded-xl bg-muted border border-border space-y-1">
+            <span className="font-bold text-foreground flex items-center gap-1.5">
+              <UserCheck className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              Persistent Avatar Sessions
+            </span>
+            <p className="text-muted-foreground text-[11px]">User avatarUrl persistence across logins, reloads, and OAuth session tokens.</p>
+          </div>
+          <div className="p-3.5 rounded-xl bg-muted border border-border space-y-1">
+            <span className="font-bold text-foreground flex items-center gap-1.5">
+              <Search className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+              ⌘K Quick Search Modal
+            </span>
+            <p className="text-muted-foreground text-[11px]">Instant command palette for filtering, jumping between task lists, and searching.</p>
+          </div>
+          <div className="p-3.5 rounded-xl bg-muted border border-border space-y-1">
+            <span className="font-bold text-foreground flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              Vitest Test Harness & verify-full SSL
+            </span>
+            <p className="text-muted-foreground text-[11px]">Integrated Vitest unit test suite and strict PostgreSQL verify-full connection pool.</p>
+          </div>
         </div>
       </section>
 

@@ -17,6 +17,9 @@ import {
   FileCode,
   Wallet,
   Cpu,
+  FileSpreadsheet,
+  Smartphone,
+  CheckCircle2,
 } from "lucide-react"
 
 export function ExpenseTrackerCaseStudy() {
@@ -64,7 +67,7 @@ export function ExpenseTrackerCaseStudy() {
             SpendFlow Platform
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl">
-            A high-performance full-stack personal finance and expense management platform built with Next.js 16 App Router, serverless PostgreSQL on Neon, JWT authentication, category budget caps, and audited REST API specifications.
+            A high-performance full-stack personal finance and expense management platform built with Next.js 16 App Router, serverless PostgreSQL on Neon (verify-full SSL), CSV bank statement data import wizard, category budget caps, and audited REST API specifications.
           </p>
         </div>
 
@@ -111,21 +114,52 @@ export function ExpenseTrackerCaseStudy() {
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border space-y-1 shadow-sm">
-          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Dual Client Mode</span>
-          <p className="text-xl font-extrabold text-foreground font-mono">Postgres + Mock</p>
-          <span className="text-[10px] text-muted-foreground block">Offline Local Storage</span>
+          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Data Import Wizard</span>
+          <p className="text-xl font-extrabold text-blue-700 dark:text-blue-400 font-mono">CSV + JSON</p>
+          <span className="text-[10px] text-muted-foreground block">Statement Parser</span>
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border space-y-1 shadow-sm">
           <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Security</span>
-          <p className="text-xl font-extrabold text-emerald-700 dark:text-emerald-400 font-mono">JWT + Bcrypt</p>
-          <span className="text-[10px] text-muted-foreground block">User Scoped Boundaries</span>
+          <p className="text-xl font-extrabold text-emerald-700 dark:text-emerald-400 font-mono">verify-full SSL</p>
+          <span className="text-[10px] text-muted-foreground block">Encrypted Database Pool</span>
         </div>
 
         <div className="p-4 rounded-xl bg-card border border-border space-y-1 shadow-sm">
-          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Database</span>
-          <p className="text-xl font-extrabold text-blue-700 dark:text-blue-400 font-mono">5 Relational Tables</p>
-          <span className="text-[10px] text-muted-foreground block">Foreign Key Cascades</span>
+          <span className="text-[11px] font-mono text-muted-foreground uppercase font-bold">Lighthouse Score</span>
+          <p className="text-xl font-extrabold text-purple-700 dark:text-purple-400 font-mono">100/100 A11y</p>
+          <span className="text-[10px] text-muted-foreground block">Mobile FAB & Zero Shifts</span>
+        </div>
+      </section>
+
+      {/* NEW FEATURE HIGHLIGHTS PANEL */}
+      <section className="p-6 rounded-2xl bg-card border border-border space-y-4 shadow-sm">
+        <h3 className="text-xs font-mono uppercase font-bold text-muted-foreground tracking-wider flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <span>Latest Release Updates (v1.4.0)</span>
+        </h3>
+        <div className="grid md:grid-cols-3 gap-4 font-mono text-xs">
+          <div className="p-3.5 rounded-xl bg-muted border border-border space-y-1">
+            <span className="font-bold text-foreground flex items-center gap-1.5">
+              <FileSpreadsheet className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              CSV & JSON Import Wizard
+            </span>
+            <p className="text-muted-foreground text-[11px]">Massive statement parser for bank CSV exports & automated JSON backup restoration.</p>
+          </div>
+          <div className="p-3.5 rounded-xl bg-muted border border-border space-y-1">
+            <span className="font-bold text-foreground flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              PostgreSQL verify-full SSL
+            </span>
+            <p className="text-muted-foreground text-[11px]">Strict SSL certificate verification for Neon database pooling drivers.</p>
+          </div>
+          <div className="p-3.5 rounded-xl bg-muted border border-border space-y-1">
+            <span className="font-bold text-foreground flex items-center gap-1.5">
+              <Smartphone className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              Mobile Floating Action Button
+            </span>
+            <p className="text-muted-foreground text-[11px]">Fixed mobile FAB for instant expense logging & zero lateral overflow on small viewports.</p>
+          </div>
         </div>
       </section>
 
