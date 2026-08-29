@@ -1,7 +1,5 @@
 "use client"
 
-import { useTheme } from "@/components/theme-provider"
-
 type LogoAnimatedProps = {
   /** Tamaño en px del lado del cuadrado */
   size?: number;
@@ -12,9 +10,6 @@ export function LogoAnimated({
   size = 96,
   className,
 }: LogoAnimatedProps) {
-  const { theme } = useTheme()
-  const stroke = theme === "dark" ? "#ffffff" : "#000000";
-
   return (
     <div
       className={["inline-flex items-center justify-center", className]
@@ -34,11 +29,11 @@ export function LogoAnimated({
           y1="90"
           x2="90"
           y2="10"
-          stroke={stroke}
+          stroke="currentColor"
           strokeWidth="9"
           strokeLinecap="square"
-          className="logo-line logo-line-1"
-          style={{ transition: "stroke 0.3s ease", willChange: "stroke-dashoffset" }}
+          className="logo-line logo-line-1 text-foreground transition-colors duration-300"
+          style={{ willChange: "stroke-dashoffset" }}
         />
         {/* diagonal secundaria (paralela) */}
         <line
@@ -46,11 +41,11 @@ export function LogoAnimated({
           y1="90"
           x2="90"
           y2="30"
-          stroke={stroke}
+          stroke="currentColor"
           strokeWidth="9"
           strokeLinecap="square"
-          className="logo-line logo-line-2"
-          style={{ transition: "stroke 0.3s ease", willChange: "stroke-dashoffset" }}
+          className="logo-line logo-line-2 text-foreground transition-colors duration-300"
+          style={{ willChange: "stroke-dashoffset" }}
         />
         {/* diagonal cruzada */}
         <line
@@ -58,11 +53,11 @@ export function LogoAnimated({
           y1="10"
           x2="90"
           y2="90"
-          stroke={stroke}
+          stroke="currentColor"
           strokeWidth="9"
           strokeLinecap="square"
-          className="logo-line logo-line-3"
-          style={{ transition: "stroke 0.3s ease", willChange: "stroke-dashoffset" }}
+          className="logo-line logo-line-3 text-foreground transition-colors duration-300"
+          style={{ willChange: "stroke-dashoffset" }}
         />
       </svg>
 

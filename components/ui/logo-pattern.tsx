@@ -1,13 +1,6 @@
-"use client"
-
-import { useTheme } from "@/components/theme-provider"
-
 export function LogoPattern() {
-  const { theme } = useTheme()
-  const stroke = theme === "dark" ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.05)"
-
   return (
-    <div className="absolute inset-0 overflow-hidden opacity-50">
+    <div className="absolute inset-0 overflow-hidden opacity-50 pointer-events-none">
       <svg
         className="w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
@@ -28,10 +21,10 @@ export function LogoPattern() {
                 y1="90"
                 x2="90"
                 y2="10"
-                stroke={stroke}
+                stroke="currentColor"
                 strokeWidth="6"
                 strokeLinecap="square"
-                style={{ transition: "stroke 0.3s ease" }}
+                className="text-foreground/5 transition-colors duration-300"
               />
               {/* diagonal secundaria (paralela) */}
               <line
@@ -39,10 +32,10 @@ export function LogoPattern() {
                 y1="90"
                 x2="90"
                 y2="30"
-                stroke={stroke}
+                stroke="currentColor"
                 strokeWidth="6"
                 strokeLinecap="square"
-                style={{ transition: "stroke 0.3s ease" }}
+                className="text-foreground/5 transition-colors duration-300"
               />
               {/* diagonal cruzada */}
               <line
@@ -50,10 +43,10 @@ export function LogoPattern() {
                 y1="10"
                 x2="90"
                 y2="90"
-                stroke={stroke}
+                stroke="currentColor"
                 strokeWidth="6"
                 strokeLinecap="square"
-                style={{ transition: "stroke 0.3s ease" }}
+                className="text-foreground/5 transition-colors duration-300"
               />
             </g>
           </pattern>
@@ -63,4 +56,3 @@ export function LogoPattern() {
     </div>
   )
 }
-
