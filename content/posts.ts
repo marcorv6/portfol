@@ -105,6 +105,17 @@ Top teams enforce a mandatory verification pipeline script (\`./.agent/init.sh\`
 
 ---
 
+### ✍️ Tip 4: Editorial Reviewers for Content Quality
+In content-rich applications, top publishing platforms use specialized **Editorial Reviewer Agents** to grade articles against a strict 6-point rubric:
+- Technical accuracy and depth
+- Narrative structure and executive summary flow
+- Tone elegance and clarity
+- Code snippet correctness
+- Visual alert formatting (\`> [!NOTE]\`, \`> [!TIP]\`)
+- SEO metadata and reading time validation
+
+---
+
 ## 📋 3. Harness Engineering Implementation Checklist
 
 To scaffold an enterprise-grade agent harness in any project:
@@ -269,7 +280,7 @@ Below is an architectural guide to building resilient, bundler-agnostic micro-fr
 
 ## 🧱 2. Modern Bundler-Agnostic Module Orchestration
 
-Rather than coupling micro-frontends to legacy bundler configurations, modern architectures separate **Module Federation Spec 2.0** from build tools. Using **Rust-based Rspack** (10x-50x faster build speeds) or **Native ESM Import Maps** in Vite, applications initialize remote dependencies dynamically via universal runtime libraries (\`@module-federation/runtime\`).
+Modern Micro-Frontend Topology separates the **Module Federation Spec 2.0** specification from specific build engines. By using **Rust-based Rspack** (10x-50x faster build speeds) or **Native ESM Import Maps** in Vite, applications initialize remote dependencies dynamically via universal runtime libraries (\`@module-federation/runtime\`).
 
 ### 🚀 Bundler-Agnostic Runtime Initialization
 

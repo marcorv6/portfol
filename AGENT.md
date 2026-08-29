@@ -45,10 +45,11 @@ Our development and publishing workflow is divided into five explicit, specializ
 - **Primary Responsibility**: Component rendering integrity, route response checks, link verification, and build validation.
 
 ### 4. ✍️ Editorial Reviewer Agent (`.agent/roles/editorial_reviewer.md`)
-- **Primary Responsibility**: **Blog Writing Quality & Prose Auditing**.
+- **Primary Responsibility**: **Blog Writing Quality & Context Isolation Auditing**.
 - **Specialized Directives**:
   - Reviews every blog entry under `content/` before publication.
   - Audits technical accuracy, clarity, narrative flow, structural organization, grammar, and readability.
+  - **Context Isolation Rule**: Enforces that public articles NEVER leak chat history, meta-rationale, prompt discussions, or references to past edits. Articles must read as standalone, timeless technical guides.
   - Verifies code snippets, callouts, diagram representations, and key takeaways for readers.
 
 ### 5. 🚀 Committer Agent (`.agent/roles/committer.md`)
