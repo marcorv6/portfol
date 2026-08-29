@@ -4,6 +4,7 @@ export interface BlogPost {
   excerpt: string;
   date: string;
   readTime: string;
+  featured?: boolean;
   author: {
     name: string;
     role: string;
@@ -20,6 +21,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt: "How top AI engineering teams build deterministic harnesses around LLMs. Insights on evals-driven agent loops, AST context windowing, sandboxed verification gates, and human-in-the-loop checkpoints.",
     date: "2026-08-28",
     readTime: "9 min read",
+    featured: true,
     author: {
       name: "Marco Romero",
       role: "Frontend Architect & AI Systems Developer",
@@ -27,8 +29,6 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     tags: ["AI Engineering", "Agentic Workflows", "Anthropic", "OpenAI", "DevOps"],
     content: `
-# Harness Engineering: Lessons, Tips & Tricks from Anthropic, OpenAI, Cursor, and Cognition
-
 In the rapid evolution of AI-assisted software development, a fundamental industry consensus has emerged among top tech sector leaders like **Anthropic**, **OpenAI**, **Cursor**, **Cognition (Devin)**, and **Google DeepMind**: *unstructured chat prompts do not scale to production software*.
 
 To build reliable autonomous coding agents, leading teams do not rely on bigger prompt windows alone. Instead, they invest heavily in **Harness Engineering**—surrounding generative models with deterministic execution sandboxes, AST-aware file navigation, specialized multi-agent role division, and strict verification gates.
@@ -54,7 +54,7 @@ Harness Engineering solves these issues by shifting the AI's environment from a 
 ### 🎯 Tip 1: Role Specialization & Multi-Agent Division (Google DeepMind & Anthropic)
 Rather than prompting a single LLM to act as architect, coder, tester, and release manager simultaneously, industry leaders break down complex workflows into specialized agent roles:
 
-[ASCII Diagram of 5-Agent Architecture]
+\`\`\`ascii
                       |   ORCHESTRATOR    |
                       | (Planner & Lead)  |
                       +---------+---------+
@@ -74,6 +74,7 @@ Rather than prompting a single LLM to act as architect, coder, tester, and relea
                       |    COMMITTER      |
                       | (Verify & Push)   |
                       +-------------------+
+\`\`\`
 
 - **Orchestrator**: Inspects requirements, drafts detailed implementation plans, and maintains active task backlogs.
 - **Builder**: Focuses strictly on feature code, UI styling, and API integration.
@@ -133,6 +134,7 @@ Harness Engineering transforms non-deterministic generative models into reliable
     excerpt: "A practical guide to building evaluation harnesses, synthetic benchmark suites, and automated verification loops for production AI agents based on patterns from leading sector teams.",
     date: "2026-08-28",
     readTime: "7 min read",
+    featured: false,
     author: {
       name: "Marco Romero",
       role: "Frontend Architect & AI Systems Developer",
@@ -140,8 +142,6 @@ Harness Engineering transforms non-deterministic generative models into reliable
     },
     tags: ["Evals", "AI Quality Assurance", "Testing", "Next.js"],
     content: `
-# Evals-Driven AI Development: How Top Tech Companies Benchmark & Safeguard Autonomous Agents
-
 As AI coding agents become core contributors to production codebases, traditional software testing is undergoing a transformation. While unit tests verify code logic, **Evals-Driven Development (EDD)** evaluates the performance, accuracy, and reliability of the AI agent itself.
 
 Leading AI organizations—including **OpenAI**, **Anthropic**, **Thoughtworks**, and **Martin Fowler's engineering network**—increasingly treat evaluation suites ("Evals") as mandatory infrastructure for AI software development.
@@ -152,14 +152,15 @@ Below is an overview of how top tech companies build evaluation harnesses to ben
 
 ## 📊 1. The 3 Tiers of AI Agent Evals
 
-[Evaluation Pyramid Diagram]
+\`\`\`ascii
 +-------------------------------------------------------+
 | TIER 3: LLM-as-a-Judge & Editorial Reviewer Audits     |
 +-------------------------------------------------------+
 | TIER 2: Behavioral Unit & Integration Evals (Vitest)  |
 +-------------------------------------------------------+
-| TIER 1: Deterministic Static Analysis & Build Verification |
+| TIER 1: Deterministic Static Analysis & Build Gates   |
 +-------------------------------------------------------+
+\`\`\`
 
 ### 🔹 Tier 1: Deterministic Static Analysis & Compiler Gates
 The baseline tier ensures generated code compiles and adheres to syntax rules.
