@@ -20,7 +20,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Harness Engineering: Lessons, Tips & Tricks from Anthropic, OpenAI, Cursor, and Cognition",
     excerpt: "How top AI engineering teams build deterministic harnesses around LLMs. Insights on evals-driven agent loops, AST context windowing, sandboxed verification gates, and human-in-the-loop checkpoints.",
     date: "2026-08-28",
-    readTime: "9 min read",
+    readTime: "12 min read",
     featured: true,
     author: {
       name: "Marco Romero",
@@ -86,7 +86,28 @@ Rather than prompting a single LLM to act as architect, coder, tester, and relea
 
 ### 🔍 Tip 2: AST File Navigation & Scoped Context Windowing (Cursor & Cognition)
 Top AI developer tools like Cursor and Devin avoid dumping raw files into context. Instead:
-- **AST Symbol Indexing**: Parse TypeScript/Python files into Abstract Syntax Trees to identify exact type exports and function signatures.
+
+- **AST Symbol Indexing**: Parse TypeScript/Python files into Abstract Syntax Trees using native compiler APIs to identify exact type exports and function signatures without loading full implementation files:
+
+\`\`\`ts
+import ts from "typescript";
+
+// Parse TypeScript AST to extract public function signatures
+export function getExportedSignatures(filePath: string, sourceText: string) {
+  const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.Latest, true);
+  const exports: string[] = [];
+
+  ts.forEachChild(sourceFile, (node) => {
+    if (ts.isFunctionDeclaration(node) && node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)) {
+      const name = node.name?.getText(sourceFile);
+      if (name) exports.push(name);
+    }
+  });
+
+  return exports;
+}
+\`\`\`
+
 - **Scoped Viewports**: Limit file reading to precise line ranges (e.g. \`L40-L100\`) rather than loading 5,000-line files.
 - **Tool-Based Grep & Find**: Equip agents with targeted search tools (\`grep_search\`, \`find_by_name\`) to discover files dynamically.
 
@@ -96,23 +117,49 @@ Top AI developer tools like Cursor and Devin avoid dumping raw files into contex
 Anthropic's research on agent evaluation emphasizes that **agents must never trust their own unverified edits**.
 
 Top teams enforce a mandatory verification pipeline script (\`./.agent/init.sh\` or \`npm run verify\`) that runs three automated quality checks:
-1. **Unit & Integration Tests**: Runs test runners (\`vitest\`, \`pytest\`) to verify 100% of assertions pass.
-2. **Static Analysis & Linting**: Runs ESLint to enforce hook purity rules (e.g. React 19 \`set-state-in-effect\` rules) and type safety.
-3. **Production Compilation**: Executes production build bundlers (\`next build\`, \`tsc\`) to catch SSR and type mismatches.
+
+\`\`\`bash
+#!/usr/bin/env bash
+set -e
+
+echo "=== 🧪 STAGE 1: Running Static Analysis & ESLint ==="
+npm run lint
+
+echo "=== 🛠️ STAGE 2: Verifying TypeScript Compiler Rules ==="
+npx tsc --noEmit
+
+echo "=== 🚀 STAGE 3: Executing Automated Build Verification ==="
+npm run build
+
+echo "✅ VERIFICATION GATE PASSED CLEANLY!"
+\`\`\`
 
 > [!IMPORTANT]
-> If any step in the verification gate fails, the Committer Agent halts the release pipeline immediately and feeds the exact error traceback back into the debugging loop.
+> If any step in the verification gate fails, the Committer Agent halts the release pipeline immediately and feeds the exact error traceback back into the debugging loop for self-healing.
 
 ---
 
-### ✍️ Tip 4: Editorial Reviewers for Content Quality
-In content-rich applications, top publishing platforms use specialized **Editorial Reviewer Agents** to grade articles against a strict 6-point rubric:
-- Technical accuracy and depth
-- Narrative structure and executive summary flow
-- Tone elegance and clarity
-- Code snippet correctness
-- Visual alert formatting (\`> [!NOTE]\`, \`> [!TIP]\`)
-- SEO metadata and reading time validation
+### ✍️ Tip 4: Self-Healing Debugging Loops
+
+When tests or compiler checks fail during agent execution, production harnesses do not abandon the task or request user manual intervention immediately. Instead, they capture the **un-truncated error traceback log** and execute a self-healing retry loop:
+
+\`\`\`ascii
++-----------------------+
+|  AI CODE MODIFICATION |
++-----------+-----------+
+            |
+            v
++-----------------------+
+|   VERIFICATION GATE   |
++-----------+-----------+
+            |
+    +-------+-------+
+    |               |
+    v (PASS)        v (FAIL)
++-------+       +------------------------------------+
+| PUSH  |       | EXTRACT TRACEBACK & RE-PROMPT AGENT|
++-------+       +------------------------------------+
+\`\`\`
 
 ---
 
@@ -133,7 +180,7 @@ Harness Engineering transforms non-deterministic generative models into reliable
     title: "The Mathematics of WebGL: Parametric Manifolds, Fourier Waves & 60fps GPU Shaders",
     excerpt: "How computer graphics algorithms leverage trigonometric parametric equations, Fourier series decomposition, and quaternions in GLSL shaders to render real-time 3D manifolds at 60fps.",
     date: "2026-08-28",
-    readTime: "8 min read",
+    readTime: "12 min read",
     featured: false,
     author: {
       name: "Marco Romero",
@@ -165,14 +212,15 @@ Where:
 - $r$ is the minor radius (radius of the tube).
 - $p, q$ determine the topological knot winding invariant (e.g. $p=2, q=3$ yields a classic Trefoil Knot).
 
-### ⚡ GPU Offloading via Vertex Shaders
-Rather than generating thousands of static 3D vertex buffers on the CPU main thread, state-of-the-art graphics pipelines compute vertex positions dynamically inside GLSL vertex shaders:
+### ⚡ GPU Offloading via GLSL Shaders
+Rather than generating static 3D vertex buffers on the CPU main thread, graphics pipelines compute vertex positions dynamically inside GLSL shaders:
 
 \`\`\`glsl
 // GLSL Vertex Shader
 uniform float uTime;
 uniform float uP;
 uniform float uQ;
+varying vec3 vNormal;
 varying vec3 vPosition;
 
 void main() {
@@ -185,8 +233,26 @@ void main() {
   knotPos.y = (R + r * cos(uQ * t)) * sin(uP * t);
   knotPos.z = r * sin(uQ * t);
   
+  vNormal = normalize(normalMatrix * normal);
   vPosition = knotPos;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(knotPos, 1.0);
+}
+\`\`\`
+
+\`\`\`glsl
+// GLSL Fragment Shader - Cosmic Fresnel Glow & Specular Shading
+uniform float uTime;
+varying vec3 vNormal;
+varying vec3 vPosition;
+
+void main() {
+  vec3 viewDir = normalize(-vPosition);
+  float fresnel = pow(1.0 - dot(viewDir, vNormal), 3.0);
+  
+  vec3 baseColor = mix(vec3(0.01, 0.52, 0.78), vec3(0.96, 0.62, 0.04), fresnel);
+  float glow = sin(uTime * 2.0 + vPosition.x) * 0.15 + 0.85;
+  
+  gl_FragColor = vec4(baseColor * glow, 0.4 + fresnel * 0.5);
 }
 \`\`\`
 
@@ -200,7 +266,21 @@ Fourier Analysis states that any periodic continuous function $f(t)$ can be deco
 f(t) = a0/2 + ∑ [ an * cos(n * ω * t) + bn * sin(n * ω * t) ]
 \`\`\`
 
-In web graphics, wave superposition equations (such as Gerstner ocean waves or complex mathematical surfaces) combine multiple Fourier frequencies to render realistic fluid distortion in fragment shaders without main-thread CPU overhead.
+In web graphics, ocean wave rendering (Gerstner waves) combines multiple Fourier frequencies to render realistic fluid distortion in fragment shaders without main-thread CPU overhead:
+
+\`\`\`ts
+// Three.js Custom Shader Material Integration
+const waveMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 },
+    uColor: { value: new THREE.Color(0x0284c7) },
+  },
+  vertexShader: myVertexShader,
+  fragmentShader: myFragmentShader,
+  transparent: true,
+  wireframe: true,
+});
+\`\`\`
 
 ---
 
@@ -220,6 +300,9 @@ Spherical Linear Interpolation (**Slerp**) allows smooth 60fps rotation between 
 Slerp(q0, q1; t) = [ sin((1-t)*θ) / sin(θ) ] * q0 + [ sin(t*θ) / sin(θ) ] * q1
 \`\`\`
 
+> [!TIP]
+> **Performance Rule**: Always use quaternions (\`THREE.Quaternion\`) for camera and mesh rotations in Three.js scenes to guarantee smooth vector math across all 3D rotational planes.
+
 ---
 
 ## 💡 Best Practices for High-Performance Graphics
@@ -234,7 +317,7 @@ Slerp(q0, q1; t) = [ sin((1-t)*θ) / sin(θ) ] * q0 + [ sin(t*θ) / sin(θ) ] * 
     title: "Micro-Frontend Topology: Designing Resilient Ecosystems at Enterprise Scale",
     excerpt: "Architectural patterns for decomposing monolithic web applications into independently deployable micro-frontends with Module Federation 2.0, Rspack, Native ESM import maps, and bundler-agnostic runtime orchestration.",
     date: "2026-08-28",
-    readTime: "10 min read",
+    readTime: "13 min read",
     featured: false,
     author: {
       name: "Marco Romero",
@@ -306,10 +389,15 @@ init({
   },
 });
 
-// Dynamic async remote module loading
+// Dynamic async remote module loading with timeout fallback
 export async function loadCheckoutWidget() {
-  const RemoteWidget = await loadRemote("checkout/Widget");
-  return RemoteWidget;
+  try {
+    const RemoteWidget = await loadRemote("checkout/Widget");
+    return RemoteWidget;
+  } catch (error) {
+    console.error("Failed to load Checkout remote module:", error);
+    return null;
+  }
 }
 \`\`\`
 
@@ -322,18 +410,57 @@ A crash in one remote micro-frontend (e.g. an unhandled promise in the recommend
 Wrap remote module mounts in resilient React Error Boundaries with graceful degradation fallbacks:
 
 \`\`\`tsx
-<ErrorBoundary fallback={<RemoteModuleFallback name="Checkout" />}>
-  <Suspense fallback={<ModuleSkeleton />}>
-    <RemoteCheckoutModule />
-  </Suspense>
-</ErrorBoundary>
+import React, { Component, ReactNode } from "react";
+
+interface Props {
+  fallback: ReactNode;
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+}
+
+export className MfeErrorBoundary extends Component<Props, State> {
+  state: State = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("Micro-Frontend Remote Error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 \`\`\`
 
 ---
 
-## 🎨 4. Shared Design System Tokens
+## 🔄 4. Decoupled Event Bus for Cross-MFE State Communication
 
-To avoid loading duplicate CSS frameworks (e.g. multiple Tailwind instances across micro-apps), enforce single-source design token contract packages (\`@company/ui-tokens\`) using native CSS custom properties (\`var(--primary)\`).
+To maintain decoupling, micro-frontends must **never import global state stores directly from adjacent micro-apps**. Instead, communicate using browser-native \`CustomEvent\` buses:
+
+\`\`\`ts
+// Event Bus Utility for Micro-Apps
+export const MfeEventBus = {
+  publish<T>(eventName: string, payload: T) {
+    const event = new CustomEvent(eventName, { detail: payload });
+    window.dispatchEvent(event);
+  },
+  subscribe<T>(eventName: string, callback: (payload: T) => void) {
+    const handler = (e: Event) => callback((e as CustomEvent<T>).detail);
+    window.addEventListener(eventName, handler);
+    return () => window.removeEventListener(eventName, handler);
+  },
+};
+\`\`\`
 
 ---
 
@@ -351,7 +478,7 @@ Before adopting Micro-Frontends, evaluate your organization against these 4 crit
     title: "Sub-500ms Core Web Vitals: Engineering High-Performance Web Applications",
     excerpt: "How leading frontend teams achieve top-tier Lighthouse scores by eliminating LCP render delays, main-thread blocking tasks (TBT), layout shifts (CLS), and FOIT font flashes.",
     date: "2026-08-28",
-    readTime: "8 min read",
+    readTime: "11 min read",
     featured: false,
     author: {
       name: "Marco Romero",
@@ -395,7 +522,29 @@ const inter = Inter({
 
 ---
 
-## 🚫 2. Eliminating Total Blocking Time (TBT & INP)
+## ⚡ 2. INP (Interaction to Next Paint) Optimization
+
+Interaction to Next Paint (INP) measures how responsive a page is to user interactions (clicks, keypresses, taps). Slow INP occurs when long JavaScript tasks delay visual frame updates.
+
+### Pattern: Breaking Long Tasks with \`scheduler.yield()\`
+Rather than executing complex data formatting in a single 200ms synchronous block, yield control back to the browser compositor between chunks:
+
+\`\`\`ts
+async function processLargeDataset(items: any[]) {
+  for (let i = 0; i < items.length; i++) {
+    processItem(items[i]);
+
+    // Yield control back to browser main thread every 50 items
+    if (i % 50 === 0 && "scheduler" in window && "yield" in (window as any).scheduler) {
+      await (window as any).scheduler.yield();
+    }
+  }
+}
+\`\`\`
+
+---
+
+## 🚫 3. Eliminating Total Blocking Time (TBT)
 
 Total Blocking Time measures the total duration between FCP and Time to Interactive where the main thread is blocked by tasks exceeding 50ms.
 
@@ -417,7 +566,7 @@ useEffect(() => {
 
 ---
 
-## 📐 3. Zero CLS (Cumulative Layout Shift) Rules
+## 📐 4. Zero CLS (Cumulative Layout Shift) Rules
 
 1. **Explicit Dimensions**: Always specify \`width\` and \`height\` or CSS aspect ratios (\`aspect-square\`) on images and canvas containers.
 2. **Font Metric Matching**: Use modern font fallback metrics to match system font heights with web font heights before swap.
@@ -429,7 +578,7 @@ useEffect(() => {
     title: "Next.js 16 & React 19 Architecture: RSC Streaming, Server Actions & Zero-Bundle Ships",
     excerpt: "An architectural guide to React 19 Compiler memoization, React Server Components (RSC) wire protocol, Server Actions validation, and Partial Prerendering (PPR).",
     date: "2026-08-28",
-    readTime: "9 min read",
+    readTime: "11 min read",
     featured: false,
     author: {
       name: "Marco Romero",
@@ -472,6 +621,7 @@ Server Actions allow client forms to invoke server-side mutation functions direc
 "use server"
 
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 const ContactSchema = z.object({
   name: z.string().min(3).max(50),
@@ -488,11 +638,14 @@ export async function submitContactAction(prevState: any, formData: FormData) {
   });
 
   if (!validated.success) {
-    return { success: false, errors: validated.error.flatten() };
+    return { success: false, errors: validated.error.flatten().fieldErrors };
   }
 
-  // 2. Execute secure database or email service mutation
+  // 2. Execute secure database mutation
   await saveToDatabase(validated.data);
+  
+  // 3. Revalidate path cache on server
+  revalidatePath("/contact");
   return { success: true };
 }
 \`\`\`
@@ -511,7 +664,7 @@ The **React 19 Compiler** automatically analyzes JavaScript semantics and memoiz
     title: "Evals-Driven AI Development: How Top Tech Companies Benchmark & Safeguard Autonomous Agents",
     excerpt: "A practical guide to building evaluation harnesses, synthetic benchmark suites, and automated verification loops for production AI agents based on patterns from leading sector teams.",
     date: "2026-08-28",
-    readTime: "7 min read",
+    readTime: "10 min read",
     featured: false,
     author: {
       name: "Marco Romero",
@@ -557,7 +710,30 @@ Evaluates subjective quality, prose elegance, and architectural alignment.
 
 ---
 
-## 💡 2. Best Practices for Implementing Evals in Your Workflow
+## 💡 2. Implementation: Automated Eval Harness Runner
+
+\`\`\`ts
+// Vitest AI Agent Eval Suite
+import { describe, test, expect } from "vitest";
+import { runAgentTask } from "../agent-harness";
+
+describe("AI Agent Performance Evals", () => {
+  test("Agent resolves component export refactor without breaking route compilation", async () => {
+    const result = await runAgentTask({
+      task: "Refactor Header navigation link interface",
+      workspace: "./test-fixtures/app",
+    });
+
+    expect(result.exitCode).toBe(0);
+    expect(result.verificationGatePassed).toBe(true);
+    expect(result.modifiedFiles).toContain("components/layout/Header.tsx");
+  });
+});
+\`\`\`
+
+---
+
+## 💡 3. Best Practices for Implementing Evals
 
 1. **Isolate Agent Executions**: Run AI agents in isolated git branches or worktrees to prevent unverified code from contaminating main development branches.
 2. **Never Auto-Commit Without Verification**: Enforce \`npm run verify\` (\`test:coverage\` + \`lint\` + \`build\`) prior to any git commit.
@@ -571,7 +747,7 @@ By embedding evaluation harnesses into your continuous integration pipeline, eng
     title: "Deterministic Verification Sandboxes: How Top Tech Safeguards Autonomous AI Agents",
     excerpt: "How top engineering organizations build isolated execution sandboxes, AST static analysis filters, and automated verification loops that act as production safety guardrails for AI coding agents.",
     date: "2026-08-28",
-    readTime: "8 min read",
+    readTime: "11 min read",
     featured: false,
     author: {
       name: "Marco Romero",
