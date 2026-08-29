@@ -47,14 +47,18 @@ const Header = () => {
         <nav role="navigation" aria-label="Main navigation" className="flex items-center gap-1 sm:gap-2">
           <div className="flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 rounded-full bg-card border border-border backdrop-blur-md">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href
+              // Active tab matches exact root for '/' or any sub-path starting with the tab href (e.g. /blog/post-slug matches /blog)
+              const isActive = link.href === "/" 
+                ? pathname === "/" 
+                : pathname === link.href || pathname.startsWith(`${link.href}/`)
+
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={`px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all duration-200 ${
                     isActive
-                      ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                      ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 font-semibold"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   }`}
                 >
