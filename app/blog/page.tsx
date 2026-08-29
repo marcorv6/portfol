@@ -36,8 +36,8 @@ export default function BlogIndexPage() {
         {/* Header Hero Title */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border">
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-mono font-bold border border-blue-500/20 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 text-xs font-mono font-bold border border-blue-500/20 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
               <span>ENGINEERING & ARCHITECTURE INSIGHTS</span>
             </div>
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-foreground">
@@ -68,13 +68,13 @@ export default function BlogIndexPage() {
                 </button>
               )}
             </div>
-            <div className="flex items-center justify-between text-xs font-mono text-muted-foreground px-1">
+            <div className="flex items-center justify-between text-xs font-mono text-muted-foreground px-1 font-medium">
               <span className="flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-blue-500" />
+                <BookOpen className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 {filteredPosts.length} {filteredPosts.length === 1 ? "article" : "articles"} published
               </span>
               <span className="flex items-center gap-1">
-                <Layers className="w-3.5 h-3.5 text-amber-500" />
+                <Layers className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 {allTags.length} topics
               </span>
             </div>
@@ -85,9 +85,9 @@ export default function BlogIndexPage() {
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
           <button
             onClick={() => setSelectedTag(null)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all shrink-0 ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all shrink-0 ${
               selectedTag === null
-                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 font-semibold"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
                 : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
             }`}
           >
@@ -99,13 +99,13 @@ export default function BlogIndexPage() {
               <button
                 key={tag}
                 onClick={() => setSelectedTag(isSelected ? null : tag)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all shrink-0 ${
+                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all shrink-0 ${
                   isSelected
-                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 font-semibold"
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
                     : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
               >
-                <Tag className="w-3 h-3 text-blue-400" />
+                <Tag className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                 <span>{tag}</span>
               </button>
             );
@@ -115,12 +115,12 @@ export default function BlogIndexPage() {
         {/* FEATURED SPOTLIGHT ARTICLE */}
         {!selectedTag && !searchQuery && featuredPost && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-xs font-mono text-blue-600 dark:text-blue-400 font-bold">
-              <Sparkles className="w-4 h-4" />
+            <div className="flex items-center gap-2 text-xs font-mono text-blue-700 dark:text-blue-400 font-bold">
+              <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <span>FEATURED SPOTLIGHT</span>
             </div>
 
-            <article className="group relative rounded-3xl border border-blue-500/30 bg-gradient-to-br from-card via-card to-blue-950/20 p-6 sm:p-10 transition-colors duration-300 hover:border-blue-500/50 shadow-lg overflow-hidden">
+            <article className="group relative rounded-3xl border border-blue-500/30 bg-gradient-to-br from-card via-card to-blue-950/20 dark:to-blue-950/40 p-6 sm:p-10 transition-colors duration-300 hover:border-blue-500/50 shadow-lg overflow-hidden">
               <div className="absolute -right-20 -top-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
               <div className="relative z-10 space-y-6">
@@ -130,14 +130,14 @@ export default function BlogIndexPage() {
                     {featuredPost.date}
                   </span>
                   <span className="text-muted-foreground">•</span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-card border border-border text-muted-foreground font-medium">
-                    <Clock className="w-3.5 h-3.5" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-card border border-border text-foreground font-medium">
+                    <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                     {featuredPost.readTime}
                   </span>
                 </div>
 
                 <div className="space-y-4">
-                  <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground group-hover:text-blue-500 transition-colors leading-tight">
+                  <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight">
                     <Link href={`/blog/${featuredPost.slug}`}>
                       {featuredPost.title}
                     </Link>
@@ -153,9 +153,9 @@ export default function BlogIndexPage() {
                     {featuredPost.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-card border border-border text-muted-foreground text-xs font-mono font-medium"
+                        className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-card border border-border text-foreground text-xs font-mono font-medium"
                       >
-                        <Tag className="w-3 h-3 text-blue-500" />
+                        <Tag className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                         {tag}
                       </span>
                     ))}
@@ -177,8 +177,8 @@ export default function BlogIndexPage() {
         {/* ARTICLES GRID SECTION */}
         <div className="space-y-6">
           {(selectedTag || searchQuery) && (
-            <div className="text-xs font-mono text-muted-foreground flex items-center gap-2">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-blue-500" />
+            <div className="text-xs font-mono text-muted-foreground flex items-center gap-2 font-medium">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
               <span>Showing results for {selectedTag ? `tag: "${selectedTag}"` : `search: "${searchQuery}"`}</span>
             </div>
           )}
@@ -187,11 +187,11 @@ export default function BlogIndexPage() {
             {regularPosts.map((post) => (
               <article
                 key={post.slug}
-                className="group flex flex-col justify-between rounded-3xl border border-border bg-card/90 hover:bg-card p-6 sm:p-8 transition-colors duration-300 shadow-sm hover:border-primary/40"
+                className="group flex flex-col justify-between rounded-3xl border border-border bg-card hover:bg-muted/40 p-6 sm:p-8 transition-colors duration-300 shadow-sm hover:border-primary/40"
               >
                 <div className="space-y-4">
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-muted-foreground">
-                    <span className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-bold">
+                  <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-muted-foreground font-medium">
+                    <span className="inline-flex items-center gap-1 text-blue-700 dark:text-blue-400 font-bold">
                       <Calendar className="w-3.5 h-3.5" />
                       {post.date}
                     </span>
@@ -218,9 +218,9 @@ export default function BlogIndexPage() {
                     {post.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-muted text-muted-foreground text-[11px] font-mono font-medium"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-muted text-foreground text-[11px] font-mono font-medium border border-border/60"
                       >
-                        <Tag className="w-3 h-3 text-blue-500" />
+                        <Tag className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                         {tag}
                       </span>
                     ))}
@@ -228,7 +228,7 @@ export default function BlogIndexPage() {
 
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-blue-700 dark:text-blue-400 group-hover:translate-x-1 transition-transform"
                   >
                     <span>Read</span>
                     <ArrowRight className="w-3.5 h-3.5" />
